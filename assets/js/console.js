@@ -13,20 +13,10 @@ document.addEventListener("DOMContentLoaded", function() {
     var cmdHistoryPos = -1
     var isConsoleStreaming = false;
 
-    var hzk = [];
-
-    hzk[4] = "b";
-    hzk[5] = "a";
-    hzk[6] = "h"
-    hzk[7] = "x";
-    hzk[1] = "v";
-    hzk[3] = ".";
-    hzk[2] = "g";
-    hzk[8] = "k";
     
     //stop people from copy pasting
-    if(window.location.hostname != hzk[4]+hzk[7]+hzk[1]+hzk[3]+hzk[2]+hzk[2]){
-        window.close();
+    if(window.location.hostname != "bxv.gg"){
+        window.location.href = 'https://bxv.gg/';
     }
 	
     document.addEventListener("mousedown", function (e) {
