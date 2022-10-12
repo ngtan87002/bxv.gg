@@ -12,6 +12,22 @@ document.addEventListener("DOMContentLoaded", function() {
     var cursor = "_"
     var cmdHistoryPos = -1
     var isConsoleStreaming = false;
+
+    var hzk = [];
+
+    hzk[4] = "b";
+    hzk[5] = "a";
+    hzk[6] = "h"
+    hzk[7] = "x";
+    hzk[1] = "v";
+    hzk[3] = ".";
+    hzk[2] = "g";
+    hzk[8] = "k";
+    
+    //stop people from copy pasting
+    if(window.location.hostname != hzk[4]+hzk[7]+hzk[1]+hzk[3]+hzk[2]+hzk[2]){
+        window.close();
+    }
 	
     document.addEventListener("mousedown", function (e) {
         if(!isConsoleStreaming){
@@ -126,11 +142,20 @@ document.addEventListener("DOMContentLoaded", function() {
                     resolve("");
                     break;
                 case "help":
-					resolve(["--> HELP: Display this message.", "--> NLOAD: Network load information for bxv.gg.", "--> CLEAR: Clear the console."]);
+					resolve(["-> help: Display this message.", "-> nload: Network load information for bxv.gg.", "-> rank: Records of biggest mitigated attacks against bxv.", "-> clear: Clear the console."]);
                     break;
                 case "nload":
                     nload();
                     reject();
+                    break;
+                case "rank":
+                    resolve(["-> rank: Display this message", "-> rank bypassed: Show biggest bypassing attacks (peak).", "-> rank raw: Show biggest raw attacks (peak)."]);
+                    break;
+                case "rank bypassed":
+                    resolve(["Reporting the biggest bypassing attacks bxv has mitigated", "[#1] Unknown (@N/A): 31.586 Requests per second", "[#2] Opilla (@ELFmalware): 19.989 Requests per second", "[#3] Tech.Admin (@stresstechadmin): 9.575 Requests per second"])
+                    break;
+                case "rank raw":
+                    resolve(["Reporting the biggest raw attacks bxv has mitigated", "[#1] Wilford (@WilfordCEO): 9.117.364 Requests per second", "[#2] Brizy (@Oxb16): 6.985.318 Requests per second", "[#3] rasmus (@niqqrohater): 5.402.835 Requests per second"])
                     break;
                 case "clear":
 					consoleData = [];
@@ -159,7 +184,6 @@ document.addEventListener("DOMContentLoaded", function() {
         }
         
     	scale = calculate(max);
-    	console.log(scale);
     	return(scale);
     }
     
@@ -223,11 +247,11 @@ document.addEventListener("DOMContentLoaded", function() {
     	}
     	
     	//Drawing the scale numbers
-    	lines[9][0] = scale*2 + (" ".repeat(4 - (scale*2).toString().length));
-    	lines[7][0] = scale*4 + (" ".repeat(4 - (scale*4).toString().length));
-    	lines[5][0] = scale*6 + (" ".repeat(4 - (scale*6).toString().length));
-    	lines[3][0] = scale*8 + (" ".repeat(4 - (scale*8).toString().length));
-    	lines[1][0] = scale*10 + (" ".repeat(4 - (scale*10).toString().length));
+    	lines[9][0] = formatNumber(scale*2) + (" ".repeat(4 - (formatNumber(scale*2)).toString().length));
+    	lines[7][0] = formatNumber(scale*4) + (" ".repeat(4 - (formatNumber(scale*4)).toString().length));
+    	lines[5][0] = formatNumber(scale*6) + (" ".repeat(4 - (formatNumber(scale*6)).toString().length));
+    	lines[3][0] = formatNumber(scale*8) + (" ".repeat(4 - (formatNumber(scale*8)).toString().length));
+    	lines[1][0] = formatNumber(scale*10) + (" ".repeat(4 - (formatNumber(scale*10)).toString().length));
     	
     	//Drawing the statistics
     	avg = "Avg: " + formatNumber(avg);
@@ -250,6 +274,8 @@ document.addEventListener("DOMContentLoaded", function() {
     }
     
     nload = function(){
+        
+        consoleInput.innerHTML = "[ Loading Nload ] ...";
         
         isConsoleStreaming = true;
         
@@ -322,7 +348,7 @@ document.addEventListener("DOMContentLoaded", function() {
                 }
             }).catch(function (err) {
                 console.log(err);
-            	consoleInput.innerHTML = "[ Your connection is having issues ] !";
+            	consoleInput.innerHTML = "[ Your connection is having issues ("+err+") ] !";
             	setTimeout(getRps, 1000);
             });
         }
