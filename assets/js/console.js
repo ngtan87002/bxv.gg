@@ -138,6 +138,15 @@ document.addEventListener("DOMContentLoaded", function() {
                     nload();
                     reject();
                     break;
+                case "login":
+                    location.href = 'https://bxv.gg/login';
+                    reject();
+                case "skiop":
+                    resolve(["idk, just kinda cute"]);
+                    break;
+                case "voltic":
+                    resolve(["cutest"]);
+                    break;
                 case "rank":
                     resolve(["-> rank: Display this message", "-> rank bypassed: Show biggest bypassing attacks (peak).", "-> rank raw: Show biggest raw attacks (peak)."]);
                     break;
